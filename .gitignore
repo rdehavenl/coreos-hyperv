@@ -1,0 +1,6 @@
+**/*.iso
+**/.vagrant
+**/*.box
+local-data/**
+!local-data/PLACE_INSTALL_MEDIA_HERE
+!local-data/centos7.iso
