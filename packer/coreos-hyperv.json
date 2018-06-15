@@ -1,0 +1,49 @@
+{
+  "variables": {
+    "my_var": "coreos-hyperv",
+    "hyperv_switch": "Default Switch"
+  },
+  
+  "builders": [
+    {
+      "type": "hyperv-iso",
+      "generation": "2",
+      "enable_secure_boot": "false",
+      "switch_name": "{{user `hyperv_switch`}}",
+      "name": "{{user `my_var`}}",
+      "vm_name": "{{user `my_var`}}",
+      "guest_additions_mode": "disabled",
+      "iso_url": "../local-data/coreos.iso",
+      "http_directory": "./boot",
+      "iso_checksum_type": "md5",
+      "iso_checksum": "9C420E2DD36D893F3B483D796559CA70",
+      "cpu": "2",
+      "ram_size": "2048",
+      "disk_size": "8192",
+      "communicator": "ssh",
+      "ssh_username": "root",
+      "ssh_password": "packer",
+      "boot_wait": "20m",
+      "boot_command": [
+        "<enter>"
+      ],
+      "shutdown_command": "shutdown -h now",
+      "ssh_timeout": "4h"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "echo Hello World!!!",
+        "date +\"%Y-%m-%d %H:%M:%s\""
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "../local-data/output-boxes/coreos_hyperv.box"
+    }
+  ]
+}
